@@ -4,10 +4,6 @@ import Tasks from "./components/Tasks/Tasks";
 import NewTask from "./components/NewTask/NewTask";
 import useHttp from "./components/hooks/use-http";
 
-const requestConfig = {
-  url: "https://react-http-udemy-8a88f-default-rtdb.asia-southeast1.firebasedatabase.app/tasks.json",
-};
-
 function App() {
   const [tasks, setTasks] = useState([]);
 
@@ -21,15 +17,16 @@ function App() {
     setTasks(loadedTasks);
   };
 
-  const {
-    isLoading,
-    error,
-    sendRequest: fetchTasks,
-  } = useHttp(requestConfig, transformTasks);
+  const { isLoading, error, sendRequest: fetchTasks } = useHttp();
 
   useEffect(() => {
-    fetchTasks();
-  }, []);
+    fetchTasks(
+      {
+        url: "https://react-http-udemy-8a88f-default-rtdb.asia-southeast1.firebasedatabase.app/tasks.json",
+      },
+      transformTasks
+    );
+  }, [fetchTasks]);
 
   const taskAddHandler = (task) => {
     setTasks((prevTasks) => prevTasks.concat(task));
