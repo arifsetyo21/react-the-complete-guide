@@ -74,7 +74,7 @@ const SimpleInput = (props) => {
           id="email"
           onChange={emailChangeHandler}
           onBlur={emailBlurHandler}
-          value={enteredName}
+          value={enteredEmail}
         />
       </div>
       {emailInputHasError && <p>Email must not be empty</p>}
