@@ -1,14 +1,12 @@
-import { useState, useEffect, useCallback } from "react";
 import useInputNew from "../hooks/use-Input-New";
 
 const isNotEmpty = (value) => value.trim() !== "";
 const isEmail = (value) => value.includes("@");
 
 const BasicForm = (props) => {
-  const [formIsValid, setFormIsValid] = useState(false);
-
   const {
     value: firstNameInputValue,
+    isValid: firstNameIsValid,
     hasError: firstNameHasError,
     resetValue: firstNameResetValue,
     valueChangeHandler: firstNameValueChangeHandler,
@@ -18,6 +16,7 @@ const BasicForm = (props) => {
 
   const {
     value: lastNameInputValue,
+    isValid: lastNameIsValid,
     hasError: lastNameHasError,
     resetValue: lastNameResetValue,
     valueChangeHandler: lastNameValueChangeHandler,
@@ -27,38 +26,24 @@ const BasicForm = (props) => {
 
   const {
     value: emailInputValue,
+    isValid: emailIsValid,
     hasError: emailHasError,
     resetValue: emailResetValue,
     valueChangeHandler: emailValueChangeHandler,
     inputBlurHandler: emailInputBlurHandler,
     classInput: emailClassInput,
-  } = useInputNew((value) => value.trim() !== "" && value.includes("@"));
+  } = useInputNew((value) => isNotEmpty(value) && isEmail(value));
 
-  const isAllInputValid = useCallback(() => {
-    return (
-      !firstNameHasError &&
-      !lastNameHasError &&
-      !emailHasError &&
-      emailInputValue.trim() !== ""
-    );
-  });
+  let formIsValid = false;
 
-  useEffect(() => {
-    setFormIsValid(isAllInputValid());
-  }, [
-    isAllInputValid,
-    firstNameHasError,
-    lastNameHasError,
-    emailHasError,
-    emailInputValue,
-  ]);
-
-  console.log(isAllInputValid());
+  if (firstNameIsValid && lastNameIsValid && emailIsValid) {
+    formIsValid = true;
+  }
 
   const formSubmitHandler = (event) => {
     event.preventDefault();
 
-    if (!isAllInputValid) {
+    if (!formIsValid) {
       return;
     }
 

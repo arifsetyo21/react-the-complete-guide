@@ -24,6 +24,7 @@ const useInputNew = (valueValidator) => {
 
   return {
     value,
+    isValid: valueIsValid,
     hasError,
     resetValue,
     valueChangeHandler,
