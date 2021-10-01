@@ -1,5 +1,9 @@
 const AllQuotes = () => {
-  return <div></div>;
+  return (
+    <div>
+      <h1>All Quotes Page</h1>
+    </div>
+  );
 };
 
 export default AllQuotes;
