@@ -19,17 +19,18 @@ const QuoteDetail = () => {
   const match = useRouteMatch();
 
   const { quoteId } = params;
+  console.log(quoteId);
 
   const {
     sendRequest,
     status,
     data: loadedQuote,
     error,
-  } = useHttp(getSingleQuote);
+  } = useHttp(getSingleQuote, true);
 
   useEffect(() => {
-    sendRequest();
-  }, [sendRequest]);
+    sendRequest(quoteId);
+  }, [sendRequest, quoteId]);
 
   if (status === "pending") {
     return (
